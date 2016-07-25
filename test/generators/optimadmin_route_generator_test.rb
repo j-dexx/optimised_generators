@@ -14,11 +14,43 @@ class OptimadminRouteGeneratorTest < Rails::Generators::TestCase
     FileUtils.rm_rf(Dir.glob("#{ tmp_dir }/*"))
   end
 
-  def test_route_insertion
-    run_generator %w( Page )
+  def test_route_insertion_without_additional_routes
+    run_generator %w( Page --no-toggle --no-image --no-order )
 
     assert_file 'config/routes.rb' do |routes|
-      assert_match(/resources :pages/, routes)
+      assert_match("resources :pages", routes)
+    end
+  end
+
+  def test_orderable_route
+    run_generator %w( Page --order --no-toggle --no-image )
+
+    assert_file 'config/routes.rb' do |routes|
+      assert_match("resources :pages, concerns: [:orderable]", routes)
+    end
+  end
+
+  def test_toggleable_route
+    run_generator %w( Page --toggle --no-order --no-image )
+
+    assert_file 'config/routes.rb' do |routes|
+      assert_match("resources :pages, concerns: [:toggleable]", routes)
+    end
+  end
+
+  def test_imageable_route
+    run_generator %w( Page --image --no-toggle --no-order )
+
+    assert_file 'config/routes.rb' do |routes|
+      assert_match("resources :pages, concerns: [:imageable]", routes)
+    end
+  end
+
+  def test_route_with_all_options
+    run_generator %w( Page --image --toggle --order )
+
+    assert_file 'config/routes.rb' do |routes|
+      assert_match("resources :pages, concerns: [:imageable, :orderable, :toggleable]", routes)
     end
   end
 
