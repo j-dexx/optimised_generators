@@ -1,0 +1,29 @@
+<%%= render 'optimadmin/shared/header/main_title', title: 'Manage <%= plural_name.titleize %>' %>
+
+<div class="main-content">
+  <div class="row module-header collapse">
+    <%%= render 'optimadmin/shared/module/index/new_item', title: '<%= singular_name %>',
+      object: <%= singular_name %>, path: new_<%= singular_table_name %>_path %>
+    <%%= render 'optimadmin/shared/module/index/recycle_bin',
+      items: @<%= plural_name %>.size, path: root_url %>
+  </div>
+
+  <div class="row collapse module-list-index header">
+
+    <%%= list_item '<%= index_title_classes %>' do %>
+      <%%= link_to octicon('chevron-down'), '#', 
+        class: 'helper-link index-list-expand-all',
+        data: { this_class: 'octicon-chevron-up octicon-chevron-down' } %>
+      Title
+    <%% end %>
+    <% if image? %>
+      <%%= list_item('large-2 hide-for-medium-down') { 'Image' } %>
+    <% end %>
+    <%%= list_item { 'Display' } %>
+    <%%= list_item { 'View' } %>
+    <%%= list_item { 'Edit' } %>
+    <%%= list_item('large-1 hide-for-medium-down text-center last') { 'Delete' } %>
+  </div>
+
+  <%%= render partial: 'optimadmin/<%= singular_name %>', collection: @<%= plural_name %> %>
+</div>
