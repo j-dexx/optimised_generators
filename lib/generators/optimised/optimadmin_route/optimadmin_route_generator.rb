@@ -14,10 +14,20 @@ module Optimised
       def insert_route
         insert_into_file "config/routes.rb",
           route,
-          after: "Optimadmin::Engine.routes.draw do\n"
+          after: last_concern_definition
       end
 
       private
+
+      def last_concern_definition
+        <<-ROUTES
+  concern :toggleable do
+    member do
+      get 'toggle'
+    end
+  end
+        ROUTES
+      end
 
       def route
         route_to_insert = "  resources :#{ plural_name }"
