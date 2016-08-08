@@ -52,11 +52,11 @@
 <% if has_media? %>
   <%%= field_set_tag nil, id: 'tabs-2' do %>
   <% images.each do |image_attr| %>
-    <%% f.image_field :<%= image_attr %> %>
+    <%%= f.image_field :<%= image_attr %> %>
 
   <% end %>
   <% documents.each do |document_attr| %>
-    <%% f.document_field :<%= document_attr %> %>
+    <%%= f.document_field :<%= document_attr %> %>
 
   <% end %>
   <%% end %>
