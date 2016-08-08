@@ -16,8 +16,8 @@
         data: { this_class: 'octicon-chevron-up octicon-chevron-down' } %>
       Title
     <%% end %>
-    <% if image? %>
-      <%%= list_item('large-2 hide-for-medium-down') { 'Image' } %>
+    <% if has_image? %>
+    <%%= list_item('large-2 hide-for-medium-down') { 'Image' } %>
     <% end %>
     <%%= list_item { 'Display' } %>
     <%%= list_item { 'View' } %>
@@ -25,5 +25,15 @@
     <%%= list_item('large-1 hide-for-medium-down text-center last') { 'Delete' } %>
   </div>
 
+  <% if orderable? %>
+  <div class="module-sortable" data-module="<%= class_name %>">
+    <%%= render partial: 'optimadmin/<%= singular_name %>', collection: @<%= plural_name %> %>
+  </div>
+  <% else %>
   <%%= render partial: 'optimadmin/<%= singular_name %>', collection: @<%= plural_name %> %>
+  <% end %>
+
+  <% if paginated? %>
+  <%%= paginate @<%= plural_table_name %> %>
+  <% end %>
 </div>

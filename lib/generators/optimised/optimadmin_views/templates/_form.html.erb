@@ -1,0 +1,100 @@
+<%%= form_for @<%= singular_table_name %> do |f| %>
+  <%% if @<%= singular_table_name %>.errors.any? %>
+    <%%= render(
+      partial: 'optimadmin/shared/form_errors',
+      locals: {
+        model: @<%= singular_table_name %>
+      }
+    ) %>
+  <%% end %>
+
+  <div class="tabs prevent-flash">
+    <ul class="tab-list">
+      <li><a href="#tabs-1">Content</a></li>
+      <% if has_media? %>
+      <li><a href="#tabs-2">Media</a></li>
+      <li><a href="#tabs-3">Settings</a></li>
+      <% else %>
+      <li><a href="#tabs-2">Settings</a></li>
+      <% end %>
+      <li>
+        <%%= link_to '#', class: 'destroy-tabs right', data: { class: 'tabs' } do %>
+          <%%= octicon('chevron-down') %>
+          <%% end %>
+      </li>
+    </ul>
+  </div>
+
+  <%%= field_set_tag nil, id: 'tabs-1' do %>
+  <% text_attributes.each do |attribute| %>
+    <div class="field">
+      <%%= f.label :<%= attribute.column_name %> %><br>
+      <%%= f.<%= attribute.field_type %> :<%= attribute.column_name %><%= ", class: '#{'tinymce'}'" if attribute.type == :text %> %>
+    </div>
+
+  <% end %>
+  <% date_attributes.each do |attribute| %>
+    <%%= f.datepicker_field :<%= attribute.column_name %> %>
+
+  <% end %>
+  <% datetime_attributes.each do |attribute| %>
+    <%%= f.datetimepicker_field :<%= attribute.column_name %> %>
+
+  <% end %>
+  <% numeric_attributes.each do |attribute| %>
+    <div class="field">
+      <%%= f.label :<%= attribute.column_name %> %><br>
+      <%%= f.number_field :<%= attribute.column_name %>%>
+    </div>
+  <% end %>
+  <%% end %>
+
+<% if has_media? %>
+  <%%= field_set_tag nil, id: 'tabs-2' do %>
+  <% images.each do |image_attr| %>
+    <%% f.image_field :<%= image_attr %> %>
+
+  <% end %>
+  <% documents.each do |document_attr| %>
+    <%% f.document_field :<%= document_attr %> %>
+
+  <% end %>
+  <%% end %>
+
+  <%%= field_set_tag nil, id: 'tabs-3' do %>
+  <% datetime_settings_attributes.each do |attribute| %>
+    <div class="field">
+      <%%= f.datetimepicker_field :<%= attribute.column_name %> %>
+    </div>
+
+  <% end %>
+  <% boolean_attributes.each do |attribute| %>
+    <div class="field">
+      <%%= f.label :<%= attribute.column_name %> %><br>
+      <%%= f.check_box :<%= attribute.column_name %> %>
+    </div>
+
+  <% end %>
+  <%% end %>
+<% else %>
+  <%%= field_set_tag nil, id: 'tabs-2' do %>
+  <% datetime_settings_attributes.each do |attribute| %>
+    <div class="field">
+      <%%= f.datetimepicker_field :<%= attribute.column_name %> %>
+    </div>
+
+  <% end %>
+  <% boolean_attributes.each do |attribute| %>
+    <div class="field">
+      <%%= f.label :<%= attribute.column_name %> %><br>
+      <%%= f.check_box :<%= attribute.column_name %> %>
+    </div>
+
+  <% end %>
+  <%% end %>
+<% end %>
+  <div class="actions">
+    <%%= f.submit 'Save' %>
+    <%%= f.submit 'Save and continue editing' %>
+  </div>
+<%% end %>
