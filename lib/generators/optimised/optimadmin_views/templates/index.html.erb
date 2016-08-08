@@ -31,10 +31,10 @@
 
   <% if orderable? %>
   <div class="module-sortable" data-module="<%= class_name %>">
-    <%%= render partial: 'optimadmin/<%= singular_name %>', collection: @<%= plural_name %> %>
+    <%%= render partial: 'optimadmin/<%= plural_name %>/<%= singular_name %>', collection: @<%= plural_name %> %>
   </div>
   <% else %>
-  <%%= render partial: 'optimadmin/<%= singular_name %>', collection: @<%= plural_name %> %>
+    <%%= render partial: 'optimadmin/<%= plural_name %>/<%= singular_name %>', collection: @<%= plural_name %> %>
   <% end %>
 
   <% if paginated? %>

@@ -26,6 +26,7 @@ module OptimadminViews
         refute_match("list_item 'large-6 small-8' do", index_page)
         refute_match("list_item 'large-5 small-8' do", index_page)
         assert_match("list_item 'large-8 small-8' do", index_page)
+        assert_match("partial: 'optimadmin/pages/page'", index_page)
         assert_match('Manage Pages', index_page)
         assert_match("paginate @pages", index_page)
       end
