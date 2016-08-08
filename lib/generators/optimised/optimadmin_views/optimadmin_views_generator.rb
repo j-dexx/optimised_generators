@@ -28,6 +28,10 @@ module Optimised
         generate("optimised:optimadmin_views:form", generator_string)
       end
 
+      def add_partial
+        generate("optimised:optimadmin_views:partial", generator_string)
+      end
+
       private
 
       def generator_string

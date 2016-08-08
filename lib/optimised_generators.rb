@@ -9,6 +9,7 @@ require 'generators/optimised/optimadmin_views/index_generator'
 require 'generators/optimised/optimadmin_views/new_generator'
 require 'generators/optimised/optimadmin_views/edit_generator'
 require 'generators/optimised/optimadmin_views/form_generator'
+require 'generators/optimised/optimadmin_views/partial_generator'
 
 module OptimisedGenerators
   # Your code goes here...
