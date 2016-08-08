@@ -22,9 +22,35 @@ module OptimadminViews
         refute_match('optimadmin/shared/module/index/order', index_page)
         refute_match('optimadmin/shared/module/index/pagination', index_page)
         refute_match('Image', index_page)
-        assert_match('Manage Pages', index_page)
+        refute_match("list_item 'large-7 small-8' do", index_page)
+        refute_match("list_item 'large-6 small-8' do", index_page)
+        refute_match("list_item 'large-5 small-8' do", index_page)
         assert_match("list_item 'large-8 small-8' do", index_page)
+        assert_match('Manage Pages', index_page)
         assert_match("paginate @pages", index_page)
+      end
+    end
+
+    def test_with_order
+      run_generator %w( Page position:integer )
+
+      assert_file 'app/views/optimadmin/pages/index.html.erb' do |index_page|
+        assert_match("link_to octicon('settings')", index_page)
+        assert_match("list_item 'large-7 small-8' do", index_page)
+        refute_match("list_item 'large-8 small-8' do", index_page)
+        refute_match("list_item 'large-6 small-8' do", index_page)
+        refute_match("list_item 'large-5 small-8' do", index_page)
+      end
+    end
+
+    def test_with_order_and_image
+      run_generator %w( Page position:integer --images image )
+
+      assert_file 'app/views/optimadmin/pages/index.html.erb' do |index_page|
+        assert_match("list_item 'large-5 small-8' do", index_page)
+        refute_match("list_item 'large-6 small-8' do", index_page)
+        refute_match("list_item 'large-7 small-8' do", index_page)
+        refute_match("list_item 'large-8 small-8' do", index_page)
       end
     end
 
@@ -32,8 +58,11 @@ module OptimadminViews
       run_generator %w( Page --images image )
 
       assert_file 'app/views/optimadmin/pages/index.html.erb' do |index_page|
-        assert_match("list_item 'large-6 small-8' do", index_page)
         assert_match('Image', index_page)
+        assert_match("list_item 'large-6 small-8' do", index_page)
+        refute_match("list_item 'large-5 small-8' do", index_page)
+        refute_match("list_item 'large-7 small-8' do", index_page)
+        refute_match("list_item 'large-8 small-8' do", index_page)
       end
     end
 

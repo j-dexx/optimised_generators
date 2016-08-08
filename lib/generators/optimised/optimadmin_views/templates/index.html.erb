@@ -9,8 +9,12 @@
   </div>
 
   <div class="row collapse module-list-index header">
-
-    <%%= list_item '<%= index_title_classes %>' do %>
+    <% if orderable? %>
+      <%%= 'large-1 hide-for-medium-down' do %>
+        <%%= link_to octicon('settings') %>
+      <%% end %>
+    <% end %>
+    <%%= list_item 'large-<%= title_large_columns_number %> small-8' do %>
       <%%= link_to octicon('chevron-down'), '#', 
         class: 'helper-link index-list-expand-all',
         data: { this_class: 'octicon-chevron-up octicon-chevron-down' } %>
