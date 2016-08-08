@@ -13,7 +13,6 @@ module Optimised
         desc: "List of documents"
 
       def add_index
-        raise generator_string
         generate("optimised:optimadmin_views:index", generator_string)
       end
 
